@@ -48,17 +48,13 @@ img {
 /* ==== NAV ==== */
 
 .navbar {
-	background: -webkit-linear-gradient(#ffffff 0%, #fbfbfb 100%);
-	padding: 1rem 3rem !important;
+	background: -webkit-linear-gradient(#ffffff 0%, #fbfbfb 100%)
 }
 
 a.navbar-brand {
 	margin-right: 20px;
 }
 
-#nav-header {
-	text-decoration: none;
-}
 /* ==== FORMS ==== */
 
 label {
