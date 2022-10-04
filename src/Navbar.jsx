@@ -44,7 +44,7 @@ export default function Navbar({ fixed }) {
                 </a>
               </li>
               <li className="nav-item">
-                <button className="button uppercase bg-cyan-600 ml-4">Resume</button>
+                <button className="button uppercase bg-cyan-600 ml-4 font-extrabold">Resumé</button>
               </li>
             </ul>
           </div>
