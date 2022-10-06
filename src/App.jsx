@@ -1,7 +1,8 @@
 import Logo from "./assets/logo.svg";
 import "./App.css";
 import Navbar from "./Navbar"
-import Hero from "./hero"
+import Hero from "./Hero"
+import Portfolio from "./Portfolio"
 
 function App() {
   return (
@@ -10,9 +11,9 @@ function App() {
         <Navbar />
       </header>
         <Hero />
+        <Portfolio />
       <div className="card">
         <ul className="text-black">
-          <li>About Me</li>
           <li>Portfolio</li>
           <li>Active Projects</li>
           <li>Certifications</li>

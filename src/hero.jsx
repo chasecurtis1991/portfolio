@@ -1,13 +1,20 @@
 import React from "react";
-import HeroBg from "./assets/Rectangle.svg"
 
 export default function Hero() {
     return (
-        <>
-            <h1 className="absolute ml-60 my-32 align-middle text-white">Chase Curtis</h1>
-            <h2 className="absolute ml-60 my-48 text-white text-xl">Web Developer</h2>
-            <img src={HeroBg} className="w-full"/>
-        </>
+        <section className="hero container mx-auto">
+            <div className="mx-auto align-middle">
+                <div className="flex flex-row flex-wrap hero-flex">
+                    <div className="basis-1/2 py-40">
+                        <h1 className="text-white name">Chase Curtis</h1>
+                        <h2 className="text-white text-xl subtitle">Web Developer</h2>
+                    </div>
+                    <div className="basis-1/2 justify-end">
+                        {/* <img className="hero-bg ml-auto" src="/src/assets/IMG_0930.PNG"/> */}
+                    </div>
+                </div>
+            </div>
+        </section>
     )
 }
 
