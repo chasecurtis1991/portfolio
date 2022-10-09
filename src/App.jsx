@@ -7,9 +7,8 @@ import Portfolio from "./Portfolio"
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
         <Navbar />
-      </header>
+        <div className="hero-overlay"></div>
         <Hero />
         <Portfolio />
       <div className="card">

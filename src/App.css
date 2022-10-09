@@ -27,19 +27,26 @@
   content: '';
   top: 0;
   left: 0;
-  background-color: #1F2937;
+  background-color: #1f2937;
   clip-path: polygon(0 0, 5760px 0, 5760px calc(100% - 352px), 0 100%);
   z-index: -3;
 }
 .hero {
   height: 35rem;
 }
-.hero::after {
-  height: 100%;
+.hero-overlay {
+  height: 50%;
   width: 100%;
   position: absolute;
-  mix-blend-mode: difference;
-  z-index: 1;
+  top: 0;
+  left: 0;
+  background-image: url('src/assets/paper-texture.jpg');
+  background-repeat: repeat-x;
+  background-size: 60rem;
+  mix-blend-mode: color-burn;
+  opacity: 25%;
+  clip-path: polygon(0 0, 5760px 0, 5760px calc(100% - 352px), 0 100%);
+  z-index: -1;
 }
 .hero-bg {
   width: 500px;
