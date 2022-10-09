@@ -13,9 +13,7 @@ function App() {
         <Portfolio />
       <div className="card">
         <ul className="text-black">
-          <li>Portfolio</li>
-          <li>Active Projects</li>
-          <li>Certifications</li>
+          <li>Training Completed</li>
           <li>Contact</li>
         </ul>
       </div>

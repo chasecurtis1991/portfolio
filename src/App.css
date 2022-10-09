@@ -56,16 +56,12 @@
   mask-image: linear-gradient(90deg, black 60%, transparent 80%);
   padding-left: 2em;
 }
-.hero-flex {
-  /* clip-path: polygon(0 0, 5360px 0, 560px calc(100% - 352px), 0 100%); */
-}
 .name,
-.subtitle {
+.subtitle{
   font-family: 'Montserrat', sans-serif;
 }
 
-
-
-.card {
-  padding: 2em;
+/* Portfolio */
+.card-img {
+  max-height: 10em;
 }
