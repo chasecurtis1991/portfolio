@@ -3,7 +3,7 @@ import React from "react";
 export default function Hero() {
   return (
     <>
-      <section className="hero container mx-auto">
+      <section className="hero container mx-auto my-16">
         <div className="mx-auto align-middle">
           <div className="flex flex-col md:flex-row flex-wrap justify-center hero-flex">
             <div className="py-40">
