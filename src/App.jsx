@@ -2,6 +2,7 @@ import "./App.css";
 import Navbar from "./Navbar"
 import Hero from "./Hero"
 import Portfolio from "./Portfolio"
+import Certifications from "./Certifications";
 
 function App() {
   return (
@@ -10,9 +11,9 @@ function App() {
         <div className="hero-overlay"></div>
         <Hero />
         <Portfolio />
+        <Certifications />
       <div className="card">
         <ul className="text-black">
-          <li>Training Completed</li>
           <li>Contact</li>
         </ul>
       </div>

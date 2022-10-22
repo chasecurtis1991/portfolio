@@ -3,7 +3,7 @@ import React from "react";
 export default function Card(props) {
   return (
     <>
-      <div className="card my-10 shadow-xl rounded-2xl">
+      <div className="card my-10 shadow-xl rounded-2xl w-80">
         <a className="h-full" href={props.url} aria-label={props.title}>
         <div className="max-w-sm rounded-2xl border shadow-md bg-gray-800 border-gray-500">
           <div className="flex h-60 bg-zinc-200 rounded-t-2xl align-middle items-center">
