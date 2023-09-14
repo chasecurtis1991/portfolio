@@ -25,17 +25,12 @@ export default function Navbar() {
             <ul className={"flex flex-col lg:flex-row list-none lg:ml-auto " + (navbarOpen ? " justify-end items-end" : "")}>
               <li className="nav-item">
                 <a className="px-3 py-3 flex items-center uppercase tracking-wider leading-snug text-white hover:opacity-75 hover:text-cyan-400" href="#">
-                  <span className="ml-2">Portfolio</span>
+                  <span className="ml-2">Projects</span>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="px-3 py-3 flex items-center uppercase tracking-wider leading-snug text-white hover:opacity-75 hover:text-cyan-400" href="#">
-                  <span className="ml-2">Active Projects</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="px-3 py-3 flex items-center uppercase tracking-wider leading-snug text-white hover:opacity-75 hover:text-cyan-400" href="#">
-                  <span className="ml-2">Certifications</span>
+                  <span className="ml-2">Certifications & Training</span>
                 </a>
               </li>
               <li className="nav-item">

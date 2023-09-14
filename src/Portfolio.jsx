@@ -12,7 +12,7 @@ export default function Portfolio(props) {
           </div>
           <div className="flex flex-wrap flex-row gap-x-6 mx-auto justify-center">
             {projects.map(data => {
-              return <Card key={data.name} title={data.name} desc={data.description} image={data.image} url={data.url}/>
+              return <Card key={data.name} title={data.name} desc={data.description} image={data.image} url={data.url} languages={data.languages}/>
             })}
           </div>
         </div>

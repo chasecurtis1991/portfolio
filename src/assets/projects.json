@@ -4,34 +4,34 @@
         "url": "https://www.chasecurtis.com/",
         "description": "My personal website showing my projects and services I offer",
         "image": "/src/assets/icon.png",
-        "languages": ["html", "css", "javascript","React"]
+        "languages": ["HTML", "CSS", "JavaScript","React"]
     },
     {
         "name": "ICSTI",
         "url": "https://www.icsti.org/",
         "description": "ICSTI is an organization that brings members together to improve scientific research effectiveness",
         "image": "https://icsti.org/icsti/images/ICSTIlogo-min.png",
-        "languages": ["html", "css", "javascript","jQuery","Solr"]
+        "languages": ["HTML", "CSS", "JavaScript","jQuery","Solr"]
     },
     {
         "name": "PIDS @ OSTI.GOV",
         "url": "https://www.osti.gov/pids/",
         "description": "Persistent identifier (PID) services to the DOE community and the US Government",
         "image": "https://www.osti.gov/pids/images/header-logo.png",
-        "languages": ["html","css","javascript","jQuery","Java","Solr", "PostgreSQL"]
+        "languages": ["HTML","CSS","JavaScript","jQuery","Java","Solr", "PostgreSQL"]
     },
     {
         "name": "Stake.com Odds",
         "url": "https://github.com/chasecurtis1991/StakeOdds",
         "description": "A Python script to show betting odds on UFC events. Reverse-engineered from closed Stake.com API.",
         "image": "/src/assets/stake.svg",
-        "languages": ["Python"]
+        "languages": ["Python", "GraphQL"]
     },
     {
-        "name": "KatKam Shopify",
-        "url": "https://itskatkam.com/",
+        "name": "ItsKatKam Shopify",
+        "url": "https://github.com/chasecurtis1991/KatKam-Shopify",
         "description": "Online store for a popular Motovlogger and Twitch streamer",
         "image": "/src/assets/KatKam.avif",
-        "languages": ["html","css","javascript","jQuery"]
+        "languages": ["HTML","CSS","JavaScript","jQuery"]
     }]
 }
