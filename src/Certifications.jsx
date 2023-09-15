@@ -3,7 +3,7 @@ import React from "react";
 export default function Certifications() {
 	return (
 		<>
-			<section className="mx-auto border-t-2 py-16 my-12 bg-gray-200">
+			<section className="mx-auto border-t-2 py-16 bg-gray-200">
 				<div className="container flex flex-wrap mx-auto">
 					<div className="flex-row w-full">
 						<h1 className="text-black mb-8">Certifications & Training</h1>
