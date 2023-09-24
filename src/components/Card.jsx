@@ -1,9 +1,9 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
-export default function Card(props) {
+const Card = forwardRef((props, ref) => {
   return (
     <>
-      <div className="card my-10 rounded-2xl w-80">
+      <div className="card my-10 rounded-2xl w-80" ref={ref}>
         <a className="h-full" href={props.url} aria-label={props.title}>
         <div className="max-w-sm rounded-2xl border shadow-md bg-gray-800 border-gray-500">
           <div className="flex h-60 bg-zinc-200 rounded-t-2xl align-middle items-center">
@@ -16,8 +16,15 @@ export default function Card(props) {
             <p className="mb-3 font-normal text-gray-400">
               {props.desc}
             </p>
-            {props.languages.map(data => {
-              return <span className="inline-block px-3 py-1 mx-1 my-1 text-sm font-semibold text-white bg-cyan-600 rounded-full">{data}</span>
+            {props.languages.map((data, index) => {
+              return (
+                <span
+                  key={index}
+                  className="inline-block px-3 py-1 mx-1 my-1 text-sm font-semibold text-white bg-cyan-600 rounded-full"
+                >
+                  {data}
+                </span>
+              );
             })}
           </div>          
         </div>
@@ -25,4 +32,6 @@ export default function Card(props) {
       </div>
     </>
   );
-}
+});
+
+export default Card;

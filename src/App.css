@@ -21,21 +21,21 @@
 
 /* Hero */
 .hero::before {
-  height: 60%;
+  height: 550px;
   width: 100%;
   position: absolute;
   content: '';
   top: 0;
   left: 0;
   background-color: #1f2937;
-  clip-path: polygon(0 0, 5760px 0, 5760px calc(100% - 352px), 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5em), 0 100%);
   z-index: -3;
 }
 .hero {
   height: 35rem;
 }
 .hero-overlay {
-  height: 60%;
+  height: 550px;
   width: 100%;
   position: absolute;
   top: 0;
@@ -45,14 +45,14 @@
   background-size: 75rem;
   mix-blend-mode: color-burn;
   opacity: 25%;
-  clip-path: polygon(0 0, 5760px 0, 5760px calc(100% - 352px), 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5em), 0 100%);
   z-index: -1;
 }
 .hero-bg {
   width: 500px;
   margin-left: 11%;
   filter: grayscale(100%);
-  clip-path: polygon(0 0, 5760px 0, 5760px calc(100% - 352px), 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5em), 0 100%);
   mask-image: linear-gradient(90deg, black 60%, transparent 80%);
   padding-left: 2em;
 }
@@ -66,4 +66,15 @@
   max-height: 10em;
 }
 
+.card {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  transition-delay: 0s;
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
 /* Certifications and Training */
