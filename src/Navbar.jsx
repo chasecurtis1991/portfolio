@@ -56,7 +56,7 @@ export default function Navbar() {
               </Link>
             </li>
               <li className="nav-item">
-                <a href="/assets/Resume.docx" download><button className="button uppercase bg-cyan-600 ml-4 text-white hover:border-white font-extrabold" >Resume</button></a>
+                <a href="/Resume.docx" download><button className="button uppercase bg-cyan-600 ml-4 text-white hover:border-white font-extrabold" >Resume</button></a>
               </li>
             </ul>
           </div>
