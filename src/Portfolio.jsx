@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import Card from "./components/Card";
-import { projects } from "./assets/projects.json";
+import { projects } from "./projects.json";
 
 export default function Portfolio(props) {
   const cardRefs = useRef([]);

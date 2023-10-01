@@ -40,7 +40,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-image: url('src/assets/paper-texture.jpg');
+  background-image: url('/paper-texture.jpg');
   background-repeat: repeat-x;
   background-size: 75rem;
   mix-blend-mode: color-burn;

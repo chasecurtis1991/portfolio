@@ -1,12 +1,12 @@
 import React from "react";
-import Logo from "./assets/logo.svg";
+import Logo from "/logo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-scroll";
 
 export default function Navbar() {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
-  
+
   return (
     <header className="App-header">
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 h-20 bg-transparent">
@@ -56,7 +56,7 @@ export default function Navbar() {
               </Link>
             </li>
               <li className="nav-item">
-                <a href="/src/assets/Resume.docx" download><button className="button uppercase bg-cyan-600 ml-4 text-white hover:border-white font-extrabold" >Resume</button></a>
+                <a href="/assets/Resume.docx" download><button className="button uppercase bg-cyan-600 ml-4 text-white hover:border-white font-extrabold" >Resume</button></a>
               </li>
             </ul>
           </div>

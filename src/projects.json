@@ -25,20 +25,20 @@
             "name": "Stake.com Odds",
             "url": "https://github.com/chasecurtis1991/StakeOdds",
             "description": "A Python script to show betting odds on UFC events. Reverse-engineered from closed Stake.com API.",
-            "image": "/src/assets/stake.svg",
+            "image": "stake.svg",
             "languages": ["Python", "GraphQL"]
         },
         {
             "name": "ItsKatKam Shopify",
             "url": "https://github.com/chasecurtis1991/KatKam-Shopify",
             "description": "Online store for a popular Motovlogger and Twitch streamer",
-            "image": "/src/assets/KatKam.avif",
+            "image": "KatKam.avif",
             "languages": ["HTML","CSS","JavaScript","jQuery"]
         },
         {
             "name": "Personal Portfolio",
             "description": "My personal website describing my projects and accomplishments",
-            "image": "/src/assets/icon.png",
+            "image": "icon.png",
             "languages": ["HTML", "CSS", "JavaScript","React"]
         }
     ]
