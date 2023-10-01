@@ -1,37 +1,45 @@
 { "projects":
-    [{
-        "name": "Personal Portfolio",
-        "url": "https://www.chasecurtis.com/",
-        "description": "My personal website showing my projects and services I offer",
-        "image": "/src/assets/icon.png",
-        "languages": ["HTML", "CSS", "JavaScript","React"]
-    },
-    {
-        "name": "ICSTI",
-        "url": "https://www.icsti.org/",
-        "description": "ICSTI is an organization that brings members together to improve scientific research effectiveness",
-        "image": "https://icsti.org/icsti/images/ICSTIlogo-min.png",
-        "languages": ["HTML", "CSS", "JavaScript","jQuery","Solr"]
-    },
-    {
-        "name": "PIDS @ OSTI.GOV",
-        "url": "https://www.osti.gov/pids/",
-        "description": "Persistent identifier (PID) services to the DOE community and the US Government",
-        "image": "https://www.osti.gov/pids/images/header-logo.png",
-        "languages": ["HTML","CSS","JavaScript","jQuery","Java","Solr", "PostgreSQL"]
-    },
-    {
-        "name": "Stake.com Odds",
-        "url": "https://github.com/chasecurtis1991/StakeOdds",
-        "description": "A Python script to show betting odds on UFC events. Reverse-engineered from closed Stake.com API.",
-        "image": "/src/assets/stake.svg",
-        "languages": ["Python", "GraphQL"]
-    },
-    {
-        "name": "ItsKatKam Shopify",
-        "url": "https://github.com/chasecurtis1991/KatKam-Shopify",
-        "description": "Online store for a popular Motovlogger and Twitch streamer",
-        "image": "/src/assets/KatKam.avif",
-        "languages": ["HTML","CSS","JavaScript","jQuery"]
-    }]
+    [
+        {
+            "name": "McLeod LoadMaster",
+            "url": "https://www.mcleodsoftware.com/truckload-carriers-loadmaster/",
+            "description": "Transportation management software and trucking industry solutions ranging from mobile communications to vehicle maintenance management",
+            "image": "https://www.mcleodsoftware.com/assets/images/template/logo.png",
+            "languages": ["HTML", "CSS", "Typescript","Java", "React", "SQL"]
+        },
+        {
+            "name": "ICSTI",
+            "url": "https://www.icsti.org/",
+            "description": "ICSTI is an organization that brings members together to improve scientific research effectiveness",
+            "image": "https://icsti.org/icsti/images/ICSTIlogo-min.png",
+            "languages": ["HTML", "CSS", "JavaScript","jQuery","Solr"]
+        },
+        {
+            "name": "PIDS @ OSTI.GOV",
+            "url": "https://www.osti.gov/pids/",
+            "description": "Persistent identifier (PID) services to the DOE community and the US Government",
+            "image": "https://www.osti.gov/pids/images/header-logo.png",
+            "languages": ["HTML","CSS","JavaScript","jQuery","Java","Solr", "SQL"]
+        },
+        {
+            "name": "Stake.com Odds",
+            "url": "https://github.com/chasecurtis1991/StakeOdds",
+            "description": "A Python script to show betting odds on UFC events. Reverse-engineered from closed Stake.com API.",
+            "image": "/src/assets/stake.svg",
+            "languages": ["Python", "GraphQL"]
+        },
+        {
+            "name": "ItsKatKam Shopify",
+            "url": "https://github.com/chasecurtis1991/KatKam-Shopify",
+            "description": "Online store for a popular Motovlogger and Twitch streamer",
+            "image": "/src/assets/KatKam.avif",
+            "languages": ["HTML","CSS","JavaScript","jQuery"]
+        },
+        {
+            "name": "Personal Portfolio",
+            "description": "My personal website describing my projects and accomplishments",
+            "image": "/src/assets/icon.png",
+            "languages": ["HTML", "CSS", "JavaScript","React"]
+        }
+    ]
 }

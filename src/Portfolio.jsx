@@ -16,7 +16,7 @@ export default function Portfolio(props) {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.3 }
     );
 
     cardRefs.current.forEach(ref => {
@@ -30,7 +30,7 @@ export default function Portfolio(props) {
 
   return (
     <>
-      <section className="container mx-auto">
+      <section className="container mx-auto" id="projects">
         <div className="flex flex-wrap">
           <div className="flex-row w-full">
             <h1 className="text-black portfolio-title">My Projects</h1>
