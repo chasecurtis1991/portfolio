@@ -1,43 +1,35 @@
 import memojiAvatar1 from "@/assets/images/memoji-avatar-1.png";
-import memojiAvatar2 from "@/assets/images/memoji-avatar-2.png";
 import memojiAvatar3 from "@/assets/images/memoji-avatar-3.png";
 import memojiAvatar4 from "@/assets/images/memoji-avatar-4.png";
 import memojiAvatar5 from "@/assets/images/memoji-avatar-5.png";
 import Image from "next/image";
 import {SectionHeader} from "@/components/SectionHeader";
-import grainImage from "@/assets/images/grain.jpg"
 import {Card} from "@/components/Card";
 import { Fragment } from "react";
 
 const testimonials = [
     {
-        name: "Alex Turner",
-        position: "Marketing Manager @ TechStartups",
-        text: "Chase was instrumental in transforming our website into a powerful marketing tool. His attention to detail and ability to understand our brand is exceptional. We're thrilled with the results!",
-        avatar: memojiAvatar1,
-    },
-    {
-        name: "Olivia Green",
-        position: "Head of Design @ GreenLeaf",
-        text: "Working with Chase was a pleasure. His expertise in frontend development brought our designs to life in a way we never imagined. The website has exceeded our expectations.",
-        avatar: memojiAvatar2,
-    },
-    {
-        name: "Daniel White",
-        position: "CEO @ InnovateCo",
-        text: "Chase's ability to create seamless user experiences is unmatched. Our website has seen a significant increase in conversions since launching the new design. We couldn't be happier.",
+        name: "Chris Nicolaou",
+        position: "Artist @ Valence",
+        text: "Chase is thorough and makes sure he does a great service by you. He helps you every step of the way and explains what it takes to make a website and what goes into it (that is, finding a domain and web hosting). I recommend him 100%! He’s great 😉",
         avatar: memojiAvatar3,
     },
     {
-        name: "Emily Carter",
-        position: "Product Manager @ GlobalTech",
-        text: "Chase is a true frontend wizard. He took our complex product and transformed it into an intuitive and engaging user interface. We're already seeing positive feedback from our customers.",
+        name: "Kat",
+        position: "Social Media Influencer @ ItsKatKam",
+        text: "Chase's work on our website has been nothing short of exceptional. He's a talented developer who is also a great communicator. We highly recommend him.",
         avatar: memojiAvatar4,
     },
     {
-        name: "Michael Brown",
-        position: "Director of IT @ MegaCorp",
-        text: "Chase's work on our website has been nothing short of exceptional. He's a talented developer who is also a great communicator. We highly recommend him.",
+        name: "Tony Beery",
+        position: "Project Manager @ KeyLogic",
+        text: "Chase's ability to create seamless user experiences is unmatched. He took our complex product and transformed it into an intuitive and engaging user interface. We couldn't be happier.",
+        avatar: memojiAvatar1,
+    },
+    {
+        name: "Brad Love",
+        position: "Senior Developer @ McLeod Software",
+        text: "Chase is a true frontend wizard. We're already seeing positive feedback from our customers.",
         avatar: memojiAvatar5,
     },
 ];
