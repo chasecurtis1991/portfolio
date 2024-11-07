@@ -20,7 +20,7 @@ export const ContactSection = () => {
                                 goals.</p>
                         </div>
                         <div>
-                            <a href={"mailto:chase@chasecurtis.com"}>
+                            <a href={"https://forms.gle/f7YXyKSJd28KAMBQA"}>
                                 <button
                                     className={"text-white bg-gray-900 inline-flex items-center px-6 h-12 rounded-xl gap-2 w-max border border-gray-900 hover:scale-110 transition duration-300"}>
                                     <span className={"font-semibold"}>Contact Me</span>

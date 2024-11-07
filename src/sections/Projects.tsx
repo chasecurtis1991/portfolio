@@ -18,11 +18,12 @@ const portfolioProjects = [
             {title: "Improved site speed by 50%"},
             {title: "Increased mobile traffic by 35%"},
         ],
-        link: "https://itskatkam.myshopify.com",
+        link: "https://github.com/chasecurtis1991/KatKam-Shopify",
         image: katkamLandingPage,
+        buttonText: "View Project"
     },
     {
-        company: "Valence Music Productions",
+        company: "Valence",
         year: "2018",
         title: "Valence Landing Page",
         results: [
@@ -30,8 +31,9 @@ const portfolioProjects = [
             {title: "Expanded customer reach by 35%"},
             {title: "Increased brand awareness by 15%"},
         ],
-        link: "http://www.valencemusicproductions.com/",
+        link: "https://github.com/chasecurtis1991/valence",
         image: valenceLandingPage,
+        buttonText: "View Project"
     },
     {
         company: "DOE Code",
@@ -44,6 +46,7 @@ const portfolioProjects = [
         ],
         link: "https://www.osti.gov/doecode",
         image: doeCodeLandingPage,
+        buttonText: "Visit Live Site"
     },
 ];
 
@@ -81,7 +84,7 @@ export const ProjectsSection = () => {
                                     <a href={project.link}>
                                         <button
                                             className={"bg-white text-gray-950 h-12 w-full md:w-auto px-6 rounded-xl font-semibold inline-flex items-center justify-center gap-2 mt-8 hover:scale-110 transition duration-300"}>
-                                            <span>Visit Live Site</span>
+                                            <span>{project.buttonText}</span>
                                             <ArrowUpRightIcon className={"size-4"}/>
                                         </button>
                                     </a>
