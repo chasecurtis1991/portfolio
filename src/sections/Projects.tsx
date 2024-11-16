@@ -1,14 +1,27 @@
 import doeCodeLandingPage from "@/assets/images/doecode-landing-page.png";
 import valenceLandingPage from "@/assets/images/valence-landing-page.png";
 import katkamLandingPage from "@/assets/images/katkam-landing-page.png";
+import kanbanProject from "@/assets/images/Kanban.png";
 import Image from "next/image";
 import CheckCircleIcon from "@/assets/icons/check-circle.svg";
 import ArrowUpRightIcon from "@/assets/icons/arrow-up-right.svg";
-import grainImage from "@/assets/images/grain.jpg";
 import {SectionHeader} from "@/components/SectionHeader";
 import {Card} from "@/components/Card";
 
 const portfolioProjects = [
+    {
+        company: "Chase Curtis",
+        year: "2024",
+        title: "Kanban Task Manager",
+        results: [
+            {title: "Organizes tasks into customizable columns"},
+            {title: "Intuitive drag-and-drop functionality"},
+            {title: "Clean and minimal design"},
+        ],
+        link: "https://github.com/chasecurtis1991/todo-kanban",
+        image: kanbanProject,
+        buttonText: "View Project"
+    },
     {
         company: "KatKam",
         year: "2022",
@@ -81,7 +94,7 @@ export const ProjectsSection = () => {
                                             </li>
                                         ))}
                                     </ul>
-                                    <a href={project.link}>
+                                    <a href={project.link} target={"_blank"}>
                                         <button
                                             className={"bg-white text-gray-950 h-12 w-full md:w-auto px-6 rounded-xl font-semibold inline-flex items-center justify-center gap-2 mt-8 hover:scale-110 transition duration-300"}>
                                             <span>{project.buttonText}</span>
