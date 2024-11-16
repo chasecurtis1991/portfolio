@@ -36,19 +36,6 @@ const portfolioProjects = [
         buttonText: "View Project"
     },
     {
-        company: "Valence",
-        year: "2018",
-        title: "Valence Landing Page",
-        results: [
-            {title: "Boosted sales by 20%"},
-            {title: "Expanded customer reach by 35%"},
-            {title: "Increased brand awareness by 15%"},
-        ],
-        link: "https://github.com/chasecurtis1991/valence",
-        image: valenceLandingPage,
-        buttonText: "View Project"
-    },
-    {
         company: "DOE Code",
         year: "2019",
         title: "DOE Code Landing Page",
@@ -60,6 +47,19 @@ const portfolioProjects = [
         link: "https://www.osti.gov/doecode",
         image: doeCodeLandingPage,
         buttonText: "Visit Live Site"
+    },
+    {
+        company: "Valence",
+        year: "2018",
+        title: "Valence Landing Page",
+        results: [
+            {title: "Boosted sales by 20%"},
+            {title: "Expanded customer reach by 35%"},
+            {title: "Increased brand awareness by 15%"},
+        ],
+        link: "https://github.com/chasecurtis1991/valence",
+        image: valenceLandingPage,
+        buttonText: "View Project"
     },
 ];
 
