@@ -79,7 +79,7 @@ export const Header = () => {
 
     return (
         <div className={"flex justify-center items-center fixed top-3 w-full z-10"}>
-            <nav className={"relative flex gap-1 p-0.5 border border-white/15 rounded-full bg-white/10 backdrop-blur"}>
+            <nav className={"relative flex gap-1 p-0.5 border border-white/15 rounded-full bg-white/10 backdrop-blur"} role="navigation" aria-label="Main navigation">
                 {/* Sliding indicator */}
                 <div
                     className="absolute bg-white rounded-full transition-transform duration-300 ease-out"
@@ -88,30 +88,35 @@ export const Header = () => {
                         width: `${indicatorWidth}px`,
                         transform: `translateX(${indicatorPosition}px)`
                     }}
+                    aria-hidden="true"
                 />
                 <a
                     href="#home"
                     id="home-link"
                     className={`nav-item relative z-10 ${activeLink === "home" ? "text-gray-900" : "text-white"}`}
                     onClick={(e) => handleNavClick(e, "home")}
+                    aria-current={activeLink === "home" ? "page" : undefined}
                 >Home</a>
                 <a
                     href="#projects"
                     id="projects-link"
                     className={`nav-item relative z-10 ${activeLink === "projects" ? "text-gray-900" : "text-white"}`}
                     onClick={(e) => handleNavClick(e, "projects")}
+                    aria-current={activeLink === "projects" ? "page" : undefined}
                 >Projects</a>
                 <a
                     href="#about"
                     id="about-link"
                     className={`nav-item relative z-10 ${activeLink === "about" ? "text-gray-900" : "text-white"}`}
                     onClick={(e) => handleNavClick(e, "about")}
+                    aria-current={activeLink === "about" ? "page" : undefined}
                 >About</a>
                 <a
                     href="#contact"
                     id="contact-link"
                     className={`nav-item relative z-10 ${activeLink === "contact" ? "text-gray-900" : "text-white"}`}
                     onClick={(e) => handleNavClick(e, "contact")}
+                    aria-current={activeLink === "contact" ? "page" : undefined}
                 >Contact</a>
             </nav>
         </div>

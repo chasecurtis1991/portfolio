@@ -73,11 +73,13 @@ export const HeroSection = () => {
             </div>
             <div className="container">
                 <div className="flex flex-col items-center">
-                    <Image src={memojiImage} className={"size-[100px] -mb-4"} alt={"Person peeking from behind laptop"}/>
+                    <Image src={memojiImage} className={"size-[100px] -mb-4"} alt={"Person peeking from behind laptop"} priority/>
                     <div
-                        className={"bg-gray-950 border border-gray-800 px-4 py-1.5 inline-flex items-center gap-4 rounded-lg"}>
-                        <div className={"bg-green-500 size-2.5 rounded-full relative"}>
-                            <div className={"bg-green-500 absolute inset-0 rounded-full animate-ping-large"}></div>
+                        className={"bg-gray-950 border border-gray-800 px-4 py-1.5 inline-flex items-center gap-4 rounded-lg"}
+                        role="status"
+                        aria-label="Availability status">
+                        <div className={"bg-green-500 size-2.5 rounded-full relative"} aria-hidden="true">
+                            <div className={"bg-green-500 absolute inset-0 rounded-full animate-ping-large"} aria-hidden="true"></div>
                         </div>
                         <div className={"text-sm font-medium"}>Available for new projects</div>
                     </div>
@@ -90,17 +92,19 @@ export const HeroSection = () => {
                         Let&lsquo;s discuss your next project.</p>
                 </div>
                 <div className={"flex flex-col md:flex-row justify-center items-center mt-8 gap-4"}>
-                    <a href={"#projects"} onClick={handleExploreClick} className={"z-10"}>
+                    <a href={"#projects"} onClick={handleExploreClick} className={"z-10"} aria-label="Explore my work">
                         <button
-                            className={"inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl hover:scale-105 transition duration-300"}>
+                            className={"inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl hover:scale-105 transition duration-300"}
+                            aria-label="View projects">
                             <span className={"font-semibold"}>Explore My Work</span>
-                            <ArrowDown className={"size-4"}/>
+                            <ArrowDown className={"size-4"} aria-hidden="true"/>
                         </button>
                     </a>
-                    <a href={"#contact"} onClick={handleConnectClick} className={"z-10"}>
+                    <a href={"#contact"} onClick={handleConnectClick} className={"z-10"} aria-label="Contact me">
                         <button
-                            className={"inline-flex items-center gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl hover:scale-105 transition duration-300"}>
-                            <span>👋</span>
+                            className={"inline-flex items-center gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl hover:scale-105 transition duration-300"}
+                            aria-label="Send a message">
+                            <span role="img" aria-label="Waving hand">👋</span>
                             <span className={"font-semibold"}>Let&lsquo;s Connect</span>
                         </button>
                     </a>
