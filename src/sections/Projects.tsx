@@ -27,9 +27,9 @@ const portfolioProjects = [
         year: "2022",
         title: "KatKam Landing Page",
         results: [
-            {title: "Enhanced user experience by 40%"},
-            {title: "Improved site speed by 50%"},
-            {title: "Increased mobile traffic by 35%"},
+            {title: "Created Shopify e-commerce store"},
+            {title: "Improved merchandise sales by 80%"},
+            {title: "Increased social media traffic by 15%"},
         ],
         link: "https://github.com/chasecurtis1991/KatKam-Shopify",
         image: katkamLandingPage,
@@ -38,10 +38,10 @@ const portfolioProjects = [
     {
         company: "DOE Code",
         year: "2019",
-        title: "DOE Code Landing Page",
+        title: "DOE Code Search Page",
         results: [
-            {title: "Enhanced user experience by 40%"},
-            {title: "Improved site speed by 50%"},
+            {title: "Enhanced user experience by 30%"},
+            {title: "Improved site speed by 20%"},
             {title: "Increased mobile traffic by 35%"},
         ],
         link: "https://www.osti.gov/doecode",
