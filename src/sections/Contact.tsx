@@ -120,7 +120,7 @@ export const ContactSection = () => {
                             </div>
                             
                             {submitStatus === 'success' && (
-                                <p className="text-center text-sm text-emerald-900 font-medium">Message sent successfully! I'll get back to you soon.</p>
+                                <p className="text-center text-sm text-emerald-900 font-medium">Message sent successfully! I&apos;ll get back to you soon.</p>
                             )}
                             {submitStatus === 'error' && (
                                 <p className="text-center text-sm text-red-600 font-medium">There was an error sending your message. Please try again.</p>
