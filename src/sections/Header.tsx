@@ -1,12 +1,18 @@
 "use client"; // This marks the component as a Client Component
 
 import {useEffect, useRef, useState} from 'react';
+import { scrollToSection } from '@/utils/scrollUtils';
 
 export const Header = () => {
-    const lastActiveSection = useRef<string>("home");
-    const [indicatorPosition, setIndicatorPosition] = useState<number>(0); // Store the position of the indicator
-    const [indicatorWidth, setIndicatorWidth] = useState<number>(0); // Store the width of the active nav item
-    const [activeLink, setActiveLink] = useState<string>("home"); // Track the active link for text color changes
+    const [indicatorPosition, setIndicatorPosition] = useState<number>(0);
+    const [indicatorWidth, setIndicatorWidth] = useState<number>(0);
+    const [activeLink, setActiveLink] = useState<string>("home");
+
+    const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+        e.preventDefault();
+        scrollToSection(sectionId);
+        setActiveLink(sectionId);
+    };
 
     useEffect(() => {
         const sections: { [key: string]: HTMLElement | null } = {
@@ -57,10 +63,7 @@ export const Header = () => {
             });
 
             if (currentSection) {
-                lastActiveSection.current = currentSection;
                 moveIndicator(currentSection); // Move the indicator to the current section's nav link
-            } else {
-                moveIndicator(lastActiveSection.current); // Use the last active section
             }
         };
 
@@ -90,21 +93,25 @@ export const Header = () => {
                     href="#home"
                     id="home-link"
                     className={`nav-item relative z-10 ${activeLink === "home" ? "text-gray-900" : "text-white"}`}
+                    onClick={(e) => handleNavClick(e, "home")}
                 >Home</a>
                 <a
                     href="#projects"
                     id="projects-link"
                     className={`nav-item relative z-10 ${activeLink === "projects" ? "text-gray-900" : "text-white"}`}
+                    onClick={(e) => handleNavClick(e, "projects")}
                 >Projects</a>
                 <a
                     href="#about"
                     id="about-link"
                     className={`nav-item relative z-10 ${activeLink === "about" ? "text-gray-900" : "text-white"}`}
+                    onClick={(e) => handleNavClick(e, "about")}
                 >About</a>
                 <a
                     href="#contact"
                     id="contact-link"
                     className={`nav-item relative z-10 ${activeLink === "contact" ? "text-gray-900" : "text-white"}`}
+                    onClick={(e) => handleNavClick(e, "contact")}
                 >Contact</a>
             </nav>
         </div>
