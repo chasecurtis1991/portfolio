@@ -35,7 +35,7 @@ Before you begin, ensure you have:
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd single-page-dev-portfolio
+cd portfolio
 ```
 
 2. Install dependencies:
@@ -70,7 +70,7 @@ The contact form is integrated with Google Sheets:
 
 ```
 src/
-├── app/                    # Next.js app directory
+├── app/                   # Next.js app directory
 │   ├── api/               # API routes
 │   └── layout.tsx         # Root layout
 ├── assets/                # Static assets
