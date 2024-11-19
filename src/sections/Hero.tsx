@@ -8,6 +8,7 @@ import StarIcon from '@/assets/icons/star.svg'
 import SparkleIcon from '@/assets/icons/sparkle.svg'
 import {HeroOrbit} from "@/components/HeroOrbit";
 import { scrollToSection } from '@/utils/scrollUtils';
+import React from "react";
 
 export const HeroSection = () => {
     const handleExploreClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -31,12 +32,6 @@ export const HeroSection = () => {
                 <div className={"size-[820px] hero-ring"}></div>
                 <div className={"size-[1020px] hero-ring"}></div>
                 <div id={"home"} className={"size-[1220px] hero-ring"}></div>
-                {/*
-                    shouldOrbit?: boolean;
-                    shouldSpin?: boolean;
-                    spinDuration?: string;
-                    orbitDuration?: string;
-                */}
                 <HeroOrbit size={430} rotation={-14} shouldOrbit orbitDuration={"30s"} shouldSpin spinDuration={"3s"}>
                     <SparkleIcon className={"size-8 text-emerald-300/20"}/>
                 </HeroOrbit>
