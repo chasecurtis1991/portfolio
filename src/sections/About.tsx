@@ -1,6 +1,6 @@
 'use client';
 import { SectionHeader } from "@/components/SectionHeader";
-import { Card } from "@/components/Card";
+import Card  from "@/components/Card";
 import bookImage from "@/assets/images/book-cover.png"
 import Image from "next/image";
 import JavascriptIcon from "@/assets/icons/square-js.svg"

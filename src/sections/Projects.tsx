@@ -6,7 +6,7 @@ import Image from "next/image";
 import CheckCircleIcon from "@/assets/icons/check-circle.svg";
 import ArrowUpRightIcon from "@/assets/icons/arrow-up-right.svg";
 import {SectionHeader} from "@/components/SectionHeader";
-import {Card} from "@/components/Card";
+import Card from "@/components/Card";
 
 const portfolioProjects = [
     {

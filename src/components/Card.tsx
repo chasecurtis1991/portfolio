@@ -5,7 +5,7 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
-export const Card = forwardRef<HTMLDivElement, CardProps>(({ children, className, ...props }, ref) => {
+const Card = forwardRef<HTMLDivElement, CardProps>(({ children, className, ...props }, ref) => {
   return (
     <div
       ref={ref}
@@ -19,3 +19,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({ children, className
     </div>
   );
 });
+
+Card.displayName = 'Card';
+
+export default Card;

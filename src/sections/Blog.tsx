@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { SectionHeader } from "@/components/SectionHeader";
-import { BlogCard } from "@/components/BlogCard";
+import  BlogCard  from "@/components/BlogCard";
 import { getBlogPosts, type BlogPost } from "@/lib/contentful";
 import Image from "next/image";
 import { format } from "date-fns";
@@ -196,7 +196,7 @@ const BlogComponent = () => {
               <div className="relative bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] shadow-2xl mx-auto max-w-7xl rounded-xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-white/[0.03]"></div>
                 <div className="absolute inset-0 overflow-hidden">
-                  <div className="absolute top-[-100%] bottom-[-100%] left-[-100%] right-[-100%] bg-[linear-gradient(135deg,transparent_0%,transparent_35%,rgba(255,255,255,0.05)_50%,transparent_65%,transparent_100%)] animate-shimmer"></div>
+                  <div className="absolute inset-0 w-[300%] h-[300%] bg-[linear-gradient(135deg,transparent_0%,transparent_26.67%,rgba(255,255,255,0.05)_33.33%,transparent_40%,transparent_100%)] animate-shimmer-bg"></div>
                 </div>
                 <div className="relative z-10">
                   <div className="container mx-auto px-4 py-8">
@@ -400,7 +400,7 @@ const BlogComponent = () => {
               <div className="relative bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] shadow-2xl mx-auto max-w-7xl rounded-xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-white/[0.03]"></div>
                 <div className="absolute inset-0 overflow-hidden">
-                  <div className="absolute top-[-100%] bottom-[-100%] left-[-100%] right-[-100%] bg-[linear-gradient(135deg,transparent_0%,transparent_35%,rgba(255,255,255,0.05)_50%,transparent_65%,transparent_100%)] animate-shimmer"></div>
+                  <div className="absolute inset-0 w-[300%] h-[300%] bg-[linear-gradient(135deg,transparent_0%,transparent_26.67%,rgba(255,255,255,0.05)_33.33%,transparent_40%,transparent_100%)] animate-shimmer-bg"></div>
                 </div>
                 <div className="relative z-10">
                   <div className="container mx-auto px-4 py-8">

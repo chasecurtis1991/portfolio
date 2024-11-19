@@ -30,6 +30,7 @@ const config: Config = {
         'move-left': 'move-left 1s linear infinite',
         'move-right': 'move-right 1s linear infinite',
         'shimmer': 'shimmer 8s linear infinite',
+        'shimmer-bg': 'shimmer-bg 8s linear infinite',
         'glow-x': 'glow-x 3s infinite',
         'glow-y': 'glow-y 3s infinite'
       },
@@ -70,6 +71,14 @@ const config: Config = {
           },
           '100%': {
             'transform': 'translateX(100%) translateY(100%)',
+          },
+        },
+        'shimmer-bg': {
+          '0%': {
+            'transform': 'translate(0%, 0%)',
+          },
+          '100%': {
+            'transform': 'translate(-66.67%, -66.67%)',
           },
         }
       }
