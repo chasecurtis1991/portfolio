@@ -1,5 +1,30 @@
-import { createClient } from 'contentful';
-import { Document, BLOCKS } from '@contentful/rich-text-types';
+import { createClient } from "contentful";
+import { Document, BLOCKS } from "@contentful/rich-text-types";
+import type {
+  Asset,
+  ContentTypeCollection,
+  Entry,
+  EntryCollection,
+} from "contentful";
+
+// Validate environment variables
+function validateEnvVariables() {
+  const spaceId = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
+  const accessToken = process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN;
+
+  if (!spaceId) {
+    throw new ContentfulError(
+      "Missing NEXT_PUBLIC_CONTENTFUL_SPACE_ID environment variable"
+    );
+  }
+  if (!accessToken) {
+    throw new ContentfulError(
+      "Missing NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN environment variable"
+    );
+  }
+
+  return { spaceId, accessToken };
+}
 
 const defaultDocument: Document = {
   nodeType: BLOCKS.DOCUMENT,
@@ -10,39 +35,53 @@ const defaultDocument: Document = {
       data: {},
       content: [
         {
-          nodeType: 'text',
-          value: 'No content available.',
+          nodeType: "text",
+          value: "No content available.",
           marks: [],
-          data: {}
-        }
-      ]
-    }
-  ]
+          data: {},
+        },
+      ],
+    },
+  ],
 };
 
-export const contentfulClient = createClient({
-  space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN!,
-  environment: 'master'
-});
+interface AssetFields {
+  title: string;
+  file: {
+    url: string;
+  };
+}
 
-export async function getContentTypes() {
-  try {
-    const response = await contentfulClient.getContentTypes();
-    console.log('Available content types:', response.items.map(type => ({
-      id: type.sys.id,
-      name: type.name,
-      fields: type.fields.map(field => ({
-        id: field.id,
-        type: field.type,
-        required: field.required
-      }))
-    })));
-    return response.items;
-  } catch (error) {
-    console.error('Error fetching content types:', error);
-    throw error;
-  }
+type EntrySkeletonType = {
+  contentTypeId: string;
+  fields: Record<string, any>;
+};
+
+interface BlogPostSkeleton extends EntrySkeletonType {
+  contentTypeId: "post";
+  fields: {
+    title: string;
+    slug: string;
+    excerpt?: string;
+    shortDescription?: string;
+    content: Document;
+    featuredImage?: {
+      fields: AssetFields;
+      sys: { type: "Asset"; id: string };
+    };
+    author?: {
+      fields: {
+        name: string;
+        avatar?: {
+          fields: AssetFields;
+          sys: { type: "Asset"; id: string };
+        };
+      };
+      sys: { type: "Entry"; id: string };
+    };
+    publishedDate: string;
+    tags?: string[];
+  };
 }
 
 export interface BlogPost {
@@ -65,89 +104,159 @@ export interface BlogPost {
   tags?: string[];
 }
 
+class ContentfulError extends Error {
+  constructor(message: string, public originalError?: unknown) {
+    super(message);
+    this.name = "ContentfulError";
+  }
+}
+
+// Initialize Contentful client with validated environment variables
+const { spaceId, accessToken } = validateEnvVariables();
+export const contentfulClient = createClient({
+  space: spaceId,
+  accessToken: accessToken,
+  environment: "master",
+});
+
+export async function getContentTypes(): Promise<ContentTypeCollection> {
+  try {
+    const response = await contentfulClient.getContentTypes();
+    console.log(
+      "Available content types:",
+      response.items.map((type) => ({
+        id: type.sys.id,
+        name: type.name,
+        fields: type.fields.map((field) => ({
+          id: field.id,
+          type: field.type,
+          required: field.required,
+        })),
+      }))
+    );
+    return response;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new ContentfulError(
+        `Failed to fetch content types: ${error.message}`,
+        error
+      );
+    }
+    throw new ContentfulError(
+      "Failed to fetch content types: Unknown error",
+      error
+    );
+  }
+}
+
 export async function getBlogPosts(): Promise<BlogPost[]> {
   try {
     const response = await contentfulClient.getEntries({
       content_type: 'pageBlogPost',
-      order: '-fields.publishedDate',
-      include: 2
+      include: 2,
     });
 
-    return response.items.map((item: any) => {
-      // Log the content structure for debugging
-      console.log('Raw content:', JSON.stringify(item.fields.content, null, 2));
+    if (!response?.items?.length) {
+      return [];
+    }
+
+    return response.items.map((item) => {
+      // Add a type guard to ensure fields exist
+      if (!('fields' in item)) {
+        throw new ContentfulError("Invalid blog post data: missing fields");
+      }
+      
+      const { fields } = item;
+      
 
       return {
-        title: item.fields.title,
-        slug: item.fields.slug,
-        excerpt: item.fields.excerpt || item.fields.shortDescription,
-        content: item.fields.content || defaultDocument,
-        featuredImage: item.fields.featuredImage?.fields?.file
+        title: fields.title ?? "",
+        slug: fields.slug ?? "",
+        excerpt: fields.excerpt || "",
+        content: fields.content || defaultDocument,        
+        publishedDate: fields.publishedDate ?? "",
+        tags: fields.tags || [],
+        featuredImage: fields.featuredImage 
           ? {
-              url: `https:${item.fields.featuredImage.fields.file.url}`,
-              title: item.fields.featuredImage.fields.title || item.fields.title,
+              url: fields.featuredImage.fields.file.url || "",
+              title: fields.featuredImage.fields.title || "",
             }
-          : {
-              url: '',
-              title: item.fields.title,
-            },
-        author: item.fields.author?.fields
+          : { url: "", title: "" },
+        author: fields.author
           ? {
-              name: item.fields.author.fields.name,
-              avatar: item.fields.author.fields.avatar?.fields?.file
+              name: fields.author.fields.name || "",
+              avatar: fields.author.fields.avatar
                 ? {
-                    url: `https:${item.fields.author.fields.avatar.fields.file.url}`,
+                    url: fields.author.fields.avatar.fields.file.url || "",
+                    title: fields.author.fields.avatar.fields.title || "",
                   }
-                : undefined,
+                : { url: "", title: "" },
             }
-          : undefined,
-        publishedDate: item.fields.publishedDate,
-        tags: item.fields.tags || [],
+          : null,
       };
     });
   } catch (error) {
-    console.error('Error fetching blog posts:', error);
-    throw error;
+    if (error instanceof ContentfulError) {
+      throw error;
+    }
+    if (error instanceof Error) {
+      throw new ContentfulError(
+        `Failed to fetch blog posts: ${error.message}`,
+        error
+      );
+    }
+    throw new ContentfulError(
+      "Failed to fetch blog posts: Unknown error",
+      error
+    );
   }
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
+  if (!slug) {
+    throw new ContentfulError("Blog post slug is required");
+  }
+
   try {
-    const response = await contentfulClient.getEntries({
-      content_type: 'pageBlogPost',
-      'fields.slug': slug,
-      limit: 1,
+    const response = await contentfulClient.getEntries<BlogPostSkeleton>({
+      content_type: 'post',
+      limit: 1
     });
 
-    if (!response.items.length) {
+    if (!response?.items?.length) {
       return null;
     }
 
-    const item = response.items[0];
+    const entry = response.items[0];
+
+    // Type assertion to ensure type safety
+    const fields = entry.fields as BlogPostSkeleton['fields'];
+
     return {
-      title: item.fields.title,
-      slug: item.fields.slug,
-      excerpt: item.fields.excerpt || item.fields.shortDescription,
-      content: item.fields.content || defaultDocument,
+      title: fields.title ?? "",
+      slug: fields.slug ?? "",
+      excerpt: fields.excerpt || fields.shortDescription || "",
+      content: fields.content || defaultDocument,
       featuredImage: {
-        url: `https:${item.fields.featuredImage?.fields?.file?.url}` || '',
-        title: item.fields.featuredImage?.fields?.title || item.fields.title,
+        url: fields.featuredImage?.fields?.file?.url
+          ? `https:${fields.featuredImage.fields.file.url}`
+          : "",
+        title: fields.featuredImage?.fields?.title || fields.title || "",
       },
-      author: item.fields.author?.fields
+      author: fields.author?.fields
         ? {
-            name: item.fields.author.fields.name,
-            avatar: item.fields.author.fields.avatar?.fields?.file
+            name: fields.author.fields.name ?? "",
+            avatar: fields.author.fields.avatar?.fields?.file
               ? {
-                  url: `https:${item.fields.author.fields.avatar.fields.file.url}`,
+                  url: `https:${fields.author.fields.avatar.fields.file.url}`,
                 }
               : undefined,
           }
         : undefined,
-      publishedDate: item.fields.publishedDate,
-      tags: item.fields.tags || [],
+      publishedDate: fields.publishedDate ?? "",
+      tags: fields.tags ?? []
     };
   } catch (error) {
-    console.error('Error fetching blog post:', error);
-    throw error;
+    throw new ContentfulError("Failed to fetch blog post", error);
   }
 }
