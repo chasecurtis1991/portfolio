@@ -345,12 +345,6 @@ const BlogComponent = () => {
                               console.log("No content found");
                               return null;
                             }
-
-                            console.log(
-                              "Content structure:",
-                              JSON.stringify(selectedPost.content, null, 2)
-                            );
-
                             if (
                               typeof selectedPost.content === "object" &&
                               selectedPost.content !== null &&

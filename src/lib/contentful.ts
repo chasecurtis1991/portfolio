@@ -58,7 +58,7 @@ type EntrySkeletonType = {
 };
 
 interface BlogPostSkeleton extends EntrySkeletonType {
-  contentTypeId: "post";
+  contentTypeId: "pageBlogPost";
   fields: {
     title: string;
     slug: string;
@@ -87,9 +87,10 @@ interface BlogPostSkeleton extends EntrySkeletonType {
 export interface BlogPost {
   title: string;
   slug: string;
-  excerpt?: string;
-  shortDescription?: string;
+  excerpt: string;
   content: Document;
+  publishedDate: string;
+  tags: string[];
   featuredImage: {
     url: string;
     title: string;
@@ -100,8 +101,6 @@ export interface BlogPost {
       url: string;
     };
   };
-  publishedDate: string;
-  tags?: string[];
 }
 
 class ContentfulError extends Error {
@@ -151,7 +150,7 @@ export async function getContentTypes(): Promise<ContentTypeCollection> {
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
   try {
-    const response = await contentfulClient.getEntries({
+    const response = await contentfulClient.getEntries<BlogPostSkeleton>({
       content_type: 'pageBlogPost',
       include: 2,
     });
@@ -166,9 +165,8 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
         throw new ContentfulError("Invalid blog post data: missing fields");
       }
       
-      const { fields } = item;
+      const { fields } = item as { fields: BlogPostSkeleton['fields'] };
       
-
       return {
         title: fields.title ?? "",
         slug: fields.slug ?? "",
@@ -179,36 +177,22 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
         featuredImage: fields.featuredImage 
           ? {
               url: fields.featuredImage.fields.file.url || "",
-              title: fields.featuredImage.fields.title || "",
+              title: fields.featuredImage.fields.title || ""
             }
           : { url: "", title: "" },
-        author: fields.author
+        author: fields.author 
           ? {
               name: fields.author.fields.name || "",
-              avatar: fields.author.fields.avatar
-                ? {
-                    url: fields.author.fields.avatar.fields.file.url || "",
-                    title: fields.author.fields.avatar.fields.title || "",
-                  }
-                : { url: "", title: "" },
+              avatar: fields.author.fields.avatar 
+                ? { url: fields.author.fields.avatar.fields.file.url || "" }
+                : undefined
             }
-          : null,
+          : undefined
       };
     });
   } catch (error) {
-    if (error instanceof ContentfulError) {
-      throw error;
-    }
-    if (error instanceof Error) {
-      throw new ContentfulError(
-        `Failed to fetch blog posts: ${error.message}`,
-        error
-      );
-    }
-    throw new ContentfulError(
-      "Failed to fetch blog posts: Unknown error",
-      error
-    );
+    console.error('Error fetching blog posts:', error);
+    throw new ContentfulError('Failed to fetch blog posts', error);
   }
 }
 
@@ -219,8 +203,8 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 
   try {
     const response = await contentfulClient.getEntries<BlogPostSkeleton>({
-      content_type: 'post',
-      limit: 1
+      content_type: 'pageBlogPost',
+      include: 2,
     });
 
     if (!response?.items?.length) {
