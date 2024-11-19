@@ -22,13 +22,16 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: 'var(--font-sans)',
-        serif: 'var(--font-serif)',
+        sans: ["var(--font-sans)"],
+        serif: ["var(--font-serif)"],
       },
       animation: {
         'ping-large': 'ping-large 1s ease-in-out infinite',
         'move-left': 'move-left 1s linear infinite',
         'move-right': 'move-right 1s linear infinite',
+        'shimmer': 'shimmer 8s linear infinite',
+        'glow-x': 'glow-x 3s infinite',
+        'glow-y': 'glow-y 3s infinite'
       },
       keyframes: {
         'ping-large': {
@@ -52,11 +55,26 @@ const config: Config = {
           '100%': {
             transform: 'translateX(0%)',
           }
+        },
+        'glow-x': {
+          '0%, 100%': { 'background-position': '200% 50%' },
+          '50%': { 'background-position': '0% 50%' }
+        },
+        'glow-y': {
+          '0%, 100%': { 'background-position': '50% 200%' },
+          '50%': { 'background-position': '50% 0%' }
+        },
+        shimmer: {
+          '0%': {
+            'transform': 'translateX(-100%) translateY(-100%)',
+          },
+          '100%': {
+            'transform': 'translateX(100%) translateY(100%)',
+          },
         }
-
       }
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
 export default config;

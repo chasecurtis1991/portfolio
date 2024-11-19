@@ -1,11 +1,13 @@
 "use client";
 
+import dynamic from 'next/dynamic';
 import { useState, FormEvent, useEffect } from 'react'
 import Image from 'next/image'
 import grainImage from '@/assets/images/grain.jpg'
 import ArrowUpRightIcon from '@/assets/icons/arrow-up-right.svg'
 
-export const ContactSection = () => {
+// Separate the contact form into a client-only component
+const ContactFormComponent = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -99,7 +101,6 @@ export const ContactSection = () => {
                                         onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                                         className="w-full px-4 py-2 rounded-lg bg-white/90 border border-gray-900/10 focus:outline-none focus:ring-2 focus:ring-gray-900"
                                         aria-required="true"
-                                        aria-invalid={submitStatus === 'error'}
                                     />
                                 </div>
                                 <div>
@@ -113,12 +114,11 @@ export const ContactSection = () => {
                                         onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                                         className="w-full px-4 py-2 rounded-lg bg-white/90 border border-gray-900/10 focus:outline-none focus:ring-2 focus:ring-gray-900"
                                         aria-required="true"
-                                        aria-invalid={submitStatus === 'error'}
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label htmlFor="phone" className="block text-sm font-medium mb-1">Phone Number <span className="sr-only">(optional)</span></label>
+                                <label htmlFor="phone" className="block text-sm font-medium mb-1">Phone <span className="sr-only">(optional)</span></label>
                                 <input
                                     type="tel"
                                     id="phone"
@@ -126,7 +126,6 @@ export const ContactSection = () => {
                                     value={formData.phone}
                                     onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                                     className="w-full px-4 py-2 rounded-lg bg-white/90 border border-gray-900/10 focus:outline-none focus:ring-2 focus:ring-gray-900"
-                                    aria-required="false"
                                 />
                             </div>
                             <div>
@@ -135,41 +134,31 @@ export const ContactSection = () => {
                                     id="message"
                                     name="message"
                                     required
-                                    rows={4}
                                     value={formData.message}
                                     onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
+                                    rows={4}
                                     className="w-full px-4 py-2 rounded-lg bg-white/90 border border-gray-900/10 focus:outline-none focus:ring-2 focus:ring-gray-900"
                                     aria-required="true"
-                                    aria-invalid={submitStatus === 'error'}
                                 />
                             </div>
-                            
-                            <div className="flex justify-center">
+                            <div className="flex items-center justify-between">
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    aria-busy={isSubmitting}
-                                    className={"text-white bg-gray-900 inline-flex items-center px-6 h-12 rounded-xl gap-2 w-max border border-gray-900 hover:scale-110 transition duration-300 disabled:opacity-50 disabled:hover:scale-100"}>
-                                    <span className={"font-semibold"}>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
-                                    <ArrowUpRightIcon className="size-4" aria-hidden="true"/>
+                                    className="bg-gray-900 text-white px-8 h-12 rounded-xl font-semibold inline-flex items-center justify-center gap-2 hover:scale-110 transition duration-300 disabled:opacity-50 disabled:hover:scale-100"
+                                >
+                                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                                    {!isSubmitting && <ArrowUpRightIcon className="size-5 mb-1"/>}
                                 </button>
-                            </div>
-                            
-                            <div 
-                                aria-live="polite" 
-                                className={`overflow-hidden transition-all duration-500 ease-in-out ${submitStatus !== 'idle' ? 'h-14 opacity-100 mt-4' : 'h-0 opacity-0 mt-0'}`}
-                            >
                                 {submitStatus === 'success' && (
-                                    <p role="status" 
-                                       className={`text-center text-base bg-emerald-600 px-6 py-2 rounded-full font-medium text-white mx-auto w-max transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-                                        Message sent successfully! I&apos;ll get back to you soon.
-                                    </p>
+                                    <div className={`text-gray-900 font-medium transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                                        Message sent successfully!
+                                    </div>
                                 )}
                                 {submitStatus === 'error' && (
-                                    <p role="alert" 
-                                       className={`text-center text-base bg-red-600 px-6 py-2 rounded-full font-medium text-white mx-auto w-max transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-                                        There was an error sending your message. Please try again.
-                                    </p>
+                                    <div className={`text-red-600 font-medium transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                                        Failed to send message. Please try again.
+                                    </div>
                                 )}
                             </div>
                         </form>
@@ -179,3 +168,6 @@ export const ContactSection = () => {
         </div>
     );
 };
+
+// Export a client-side only version of the component
+export const ContactSection = dynamic(() => Promise.resolve(ContactFormComponent), { ssr: false });

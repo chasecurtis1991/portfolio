@@ -42,7 +42,7 @@ export default function Home() {
       <AnimatePresence>
         {isBlogVisible && (
           <motion.div
-            className="fixed top-0 right-0 w-full h-full bg-gray-900"
+            className="fixed top-0 right-0 w-full h-screen overflow-y-auto bg-gray-900"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -52,14 +52,17 @@ export default function Home() {
               ease: "easeInOut"
             }}
           >
-            <div className="pt-20 pb-16">
-              <Blog />
+            <div className="min-h-screen flex flex-col">
+              <div className="pt-20 flex-grow">
+                <Blog />
+              </div>
+              <Footer />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <Footer />
+      {!isBlogVisible && <Footer />}
     </div>
   );
 }
