@@ -1,123 +1,153 @@
-"use client"; // This marks the component as a Client Component
+"use client";
 
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { scrollToSection } from '@/utils/scrollUtils';
 
-export const Header = () => {
-    const [indicatorPosition, setIndicatorPosition] = useState<number>(0);
-    const [indicatorWidth, setIndicatorWidth] = useState<number>(0);
-    const [activeLink, setActiveLink] = useState<string>("home");
+interface HeaderProps {
+  onBlogVisibilityChange: (isVisible: boolean) => void;
+}
+
+export const Header = ({ onBlogVisibilityChange }: HeaderProps) => {
+    const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+    const [activeLink, setActiveLink] = useState("home");
 
     const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
         e.preventDefault();
-        scrollToSection(sectionId);
+        if (sectionId === "blog") {
+            onBlogVisibilityChange(true);
+        } else {
+            onBlogVisibilityChange(false);
+            scrollToSection(sectionId);
+        }
         setActiveLink(sectionId);
     };
 
     useEffect(() => {
-        const sections: { [key: string]: HTMLElement | null } = {
-            home: document.querySelector("#home"),
-            projects: document.querySelector("#projects"),
-            about: document.querySelector("#about"),
-            contact: document.querySelector("#contact")
-        };
-
-        const navLinks: { [key: string]: HTMLElement | null } = {
-            home: document.querySelector("#home-link"),
-            projects: document.querySelector("#projects-link"),
-            about: document.querySelector("#about-link"),
-            contact: document.querySelector("#contact-link")
-        };
-
-        const navbar = document.querySelector("nav"); // Get the navbar container
-
-        const moveIndicator = (section: string) => {
-            const activeLink = navLinks[section];
-            if (activeLink && navbar) {
-                const linkRect = activeLink.getBoundingClientRect();
-                const navbarRect = navbar.getBoundingClientRect();
-
-                // Calculate the position relative to the navbar container
-                const leftPosition = linkRect.left - navbarRect.left - 2;
-
-                setIndicatorPosition(leftPosition); // Update the indicator's left position relative to the navbar
-                setIndicatorWidth(linkRect.width - 2);  // Update the indicator's width to match the link
-                setActiveLink(section);             // Set the active link for text color change
+        const updateIndicator = () => {
+            const activeElement = document.getElementById(`${activeLink}-link`);
+            if (activeElement) {
+                const rect = activeElement.getBoundingClientRect();
+                const parent = activeElement.parentElement;
+                if (parent) {
+                    const parentRect = parent.getBoundingClientRect();
+                    setIndicatorStyle({
+                        left: rect.left - parentRect.left,
+                        width: rect.width
+                    });
+                }
             }
         };
 
-        const updateActiveLink = () => {
-            let currentSection: string | null = null;
+        const checkVisibleSection = () => {
+            if (activeLink === "blog") return;
 
-            Object.keys(sections).forEach(section => {
-                const sectionElement = sections[section];
-                if (sectionElement) {
-                    const sectionTop = sectionElement.offsetTop;
-                    const sectionHeight = sectionElement.offsetHeight;
-                    const scrollPosition = window.scrollY + window.innerHeight / 1.5;
+            const sections = ["home", "projects", "about", "contact"];
+            let selected = "home";
+            let minDistance = Infinity;
 
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        currentSection = section; // Section found, set it as the current section
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    const distance = Math.abs(rect.top);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        selected = section;
                     }
                 }
             });
 
-            if (currentSection) {
-                moveIndicator(currentSection); // Move the indicator to the current section's nav link
+            if (selected !== activeLink) {
+                setActiveLink(selected);
             }
         };
 
-        window.addEventListener('scroll', updateActiveLink);
+        // Update indicator position
+        updateIndicator();
 
-        // Initial position on page load
-        moveIndicator("home");
+        // Set up observers
+        const resizeObserver = new ResizeObserver(updateIndicator);
+        resizeObserver.observe(document.body);
+
+        // Throttled scroll handler
+        let scrollTimeout: NodeJS.Timeout;
+        const handleScroll = () => {
+            if (scrollTimeout) clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(checkVisibleSection, 100);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         return () => {
-            window.removeEventListener('scroll', updateActiveLink);
+            resizeObserver.disconnect();
+            window.removeEventListener('scroll', handleScroll);
+            if (scrollTimeout) clearTimeout(scrollTimeout);
         };
-    }, []);
+    }, [activeLink]);
 
     return (
-        <div className={"flex justify-center items-center fixed top-3 w-full z-10"}>
-            <nav className={"relative flex gap-1 p-0.5 border border-white/15 rounded-full bg-white/10 backdrop-blur"} role="navigation" aria-label="Main navigation">
-                {/* Sliding indicator */}
+        <div className="flex justify-center items-center fixed top-3 w-full z-50">
+            <nav className="relative flex gap-1 p-0.5 border border-white/15 rounded-full bg-white/10 backdrop-blur">
                 <div
-                    className="absolute bg-white rounded-full transition-transform duration-300 ease-out"
+                    className="absolute bg-white rounded-full transition-all duration-300 ease-in-out"
                     style={{
-                        height: "90%",
-                        width: `${indicatorWidth}px`,
-                        transform: `translateX(${indicatorPosition}px)`
+                        left: indicatorStyle.left,
+                        width: indicatorStyle.width,
+                        top: '2px',
+                        bottom: '2px'
                     }}
                     aria-hidden="true"
                 />
                 <a
                     href="#home"
                     id="home-link"
-                    className={`nav-item relative z-10 ${activeLink === "home" ? "text-gray-900" : "text-white"}`}
+                    className={`nav-item relative z-10 transition-colors duration-200 ${
+                        activeLink === "home" 
+                        ? "text-gray-900 hover:text-gray-600" 
+                        : "text-white hover:text-blue-100"
+                    }`}
                     onClick={(e) => handleNavClick(e, "home")}
-                    aria-current={activeLink === "home" ? "page" : undefined}
                 >Home</a>
                 <a
                     href="#projects"
                     id="projects-link"
-                    className={`nav-item relative z-10 ${activeLink === "projects" ? "text-gray-900" : "text-white"}`}
+                    className={`nav-item relative z-10 transition-colors duration-200 ${
+                        activeLink === "projects" 
+                        ? "text-gray-900 hover:text-gray-600" 
+                        : "text-white hover:text-blue-100"
+                    }`}
                     onClick={(e) => handleNavClick(e, "projects")}
-                    aria-current={activeLink === "projects" ? "page" : undefined}
                 >Projects</a>
                 <a
                     href="#about"
                     id="about-link"
-                    className={`nav-item relative z-10 ${activeLink === "about" ? "text-gray-900" : "text-white"}`}
+                    className={`nav-item relative z-10 transition-colors duration-200 ${
+                        activeLink === "about" 
+                        ? "text-gray-900 hover:text-gray-600" 
+                        : "text-white hover:text-blue-100"
+                    }`}
                     onClick={(e) => handleNavClick(e, "about")}
-                    aria-current={activeLink === "about" ? "page" : undefined}
                 >About</a>
                 <a
                     href="#contact"
                     id="contact-link"
-                    className={`nav-item relative z-10 ${activeLink === "contact" ? "text-gray-900" : "text-white"}`}
+                    className={`nav-item relative z-10 transition-colors duration-200 ${
+                        activeLink === "contact" 
+                        ? "text-gray-900 hover:text-gray-600" 
+                        : "text-white hover:text-blue-100"
+                    }`}
                     onClick={(e) => handleNavClick(e, "contact")}
-                    aria-current={activeLink === "contact" ? "page" : undefined}
                 >Contact</a>
+                <a
+                    href="#blog"
+                    id="blog-link"
+                    className={`nav-item relative z-10 transition-colors duration-200 ${
+                        activeLink === "blog" 
+                        ? "text-gray-900 hover:text-gray-600" 
+                        : "text-white hover:text-blue-100"
+                    }`}
+                    onClick={(e) => handleNavClick(e, "blog")}
+                >Blog</a>
             </nav>
         </div>
     );

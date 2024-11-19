@@ -9,15 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@svgr/webpack": "^8.1.0",
+    "@contentful/rich-text-react-renderer": "^16.0.0",
+    "@contentful/rich-text-types": "^17.0.0",
+    "clsx": "^2.1.1",
+    "contentful": "^11.2.2",
+    "date-fns": "^4.1.0",
     "framer-motion": "^11.3.21",
     "googleapis": "^144.0.0",
+    "lucide-react": "^0.460.0",
     "next": "^15.0.2",
     "react": "^18",
     "react-dom": "^18",
-    "tailwind-merge": "^2.4.0"
+    "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",
