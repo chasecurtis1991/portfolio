@@ -1,12 +1,12 @@
 import { createClient } from 'contentful';
-import { Document } from '@contentful/rich-text-types';
+import { Document, BLOCKS } from '@contentful/rich-text-types';
 
 const defaultDocument: Document = {
-  nodeType: 'document',
+  nodeType: BLOCKS.DOCUMENT,
   data: {},
   content: [
     {
-      nodeType: 'paragraph',
+      nodeType: BLOCKS.PARAGRAPH,
       data: {},
       content: [
         {
