@@ -2,6 +2,7 @@ import doeCodeLandingPage from "@/assets/images/doecode-landing-page.png";
 import valenceLandingPage from "@/assets/images/valence-landing-page.png";
 import katkamLandingPage from "@/assets/images/katkam-landing-page.png";
 import kanbanProject from "@/assets/images/Kanban.png";
+import cyberusProject from "@/assets/images/cyberus.png";
 import Image from "next/image";
 import CheckCircleIcon from "@/assets/icons/check-circle.svg";
 import ArrowUpRightIcon from "@/assets/icons/arrow-up-right.svg";
@@ -9,6 +10,19 @@ import {SectionHeader} from "@/components/SectionHeader";
 import Card from "@/components/Card";
 
 const portfolioProjects = [
+    {
+        company: "Chase Curtis",
+        year: "2024",
+        title: "Spotify Now Playing Widget",
+        results: [
+            {title: "Real-time song progress tracking"},
+            {title: "Direct links to currently playing track"},
+            {title: "Auto-updates when songs change"},
+        ],
+        link: "https://github.com/chasecurtis1991/cyberus",
+        image: cyberusProject,
+        buttonText: "View Project"
+    },
     {
         company: "Chase Curtis",
         year: "2024",
