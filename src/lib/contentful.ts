@@ -107,6 +107,8 @@ interface BlogPost {
   };
 }
 
+export type { BlogPost };
+
 class ContentfulError extends Error {
   constructor(message: string, public originalError?: unknown) {
     super(message);
