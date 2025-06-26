@@ -4,15 +4,24 @@ import { google } from 'googleapis';
 // Function to properly format the private key
 const formatPrivateKey = (key: string | undefined) => {
     if (!key) return '';
-    // Handle both \n and actual newlines
-    const formattedKey = key
-        .replace(/\\n/g, '\n')  // Replace string \n with actual newlines
-        .replace(/\n/g, '\n')   // Normalize any actual newlines
-        .replace(/""/g, '"');   // Fix any double quotes if present
     
-    // Ensure the key has the proper format
-    if (!formattedKey.startsWith('-----BEGIN PRIVATE KEY-----')) {
-        throw new Error('Invalid private key format');
+    let formattedKey = key;
+    
+    // Strip any surrounding quotes if present
+    if (formattedKey.startsWith('"') && formattedKey.endsWith('"')) {
+        formattedKey = formattedKey.slice(1, -1);
+    }
+    
+    // For Vercel environment variables, if the key already contains actual newlines,
+    // we don't need to replace \n - this handles keys that were entered with line breaks in Vercel UI
+    if (!formattedKey.includes('\n') && formattedKey.includes('\\n')) {
+        // If the key has escaped newlines (\n) but no actual newlines, replace them
+        formattedKey = formattedKey.replace(/\\n/g, '\n');
+    }
+    
+    // Ensure the key has the proper format with BEGIN and END markers
+    if (!formattedKey.includes('BEGIN PRIVATE KEY') || !formattedKey.includes('END PRIVATE KEY')) {
+        throw new Error('Invalid private key format - missing BEGIN/END markers');
     }
     
     return formattedKey;
