@@ -94,17 +94,17 @@ export async function POST(req: Request) {
 
 
 
-        // Format timestamp in MM/DD/YYYY hh:mm:ss format
+        // Format timestamp in MM/DD/YYYY hh:mm:ss format as plain text
         const now = new Date();
-        const timestamp = now.toLocaleString('en-US', {
-            month: '2-digit',
-            day: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false // Use 24-hour format for consistency
-        });
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        
+        // Create timestamp as a string to prevent Google Sheets auto-conversion
+        const timestamp = `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
 
         // Prepare the row data
         const row = [
