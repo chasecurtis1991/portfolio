@@ -77,7 +77,7 @@ export async function POST(req: Request) {
             );
         }
 
-        // First, get the sheet name
+        // First, get the sheet name and find existing data
         const response = await sheets.spreadsheets.get({
             spreadsheetId: SPREADSHEET_ID,
         });
@@ -92,7 +92,9 @@ export async function POST(req: Request) {
         const SHEET_NAME = sheet.properties.title;
         console.log('Found sheet name:', SHEET_NAME);
 
-        // Format timestamp
+
+
+        // Format timestamp in MM/DD/YYYY hh:mm:ss format
         const now = new Date();
         const timestamp = now.toLocaleString('en-US', {
             month: '2-digit',
@@ -100,7 +102,8 @@ export async function POST(req: Request) {
             year: 'numeric',
             hour: '2-digit',
             minute: '2-digit',
-            hour12: true
+            second: '2-digit',
+            hour12: false // Use 24-hour format for consistency
         });
 
         // Prepare the row data
@@ -112,15 +115,38 @@ export async function POST(req: Request) {
             message
         ];
 
-        // Append the row to the sheet
-        await sheets.spreadsheets.values.append({
-            spreadsheetId: SPREADSHEET_ID,
-            range: `${SHEET_NAME}!A:E`,
-            valueInputOption: 'USER_ENTERED',
-            requestBody: {
-                values: [row]
-            },
-        });
+        // Try to add to the table - first check if there's a table and extend it
+        try {
+            // Use append with insertDataOption to ensure it goes into the table
+            await sheets.spreadsheets.values.append({
+                spreadsheetId: SPREADSHEET_ID,
+                range: `${SHEET_NAME}!A:E`,
+                valueInputOption: 'USER_ENTERED',
+                insertDataOption: 'INSERT_ROWS', // This ensures new rows are inserted properly
+                requestBody: {
+                    values: [row]
+                },
+            });
+        } catch (appendError) {
+            console.log('Append failed, trying direct update:', appendError);
+            // Fallback: Get the data range and append manually
+            const existingData = await sheets.spreadsheets.values.get({
+                spreadsheetId: SPREADSHEET_ID,
+                range: `${SHEET_NAME}!A:E`,
+            });
+            
+            const nextRow = (existingData.data.values?.length || 0) + 1;
+            console.log('Using fallback method, inserting at row:', nextRow);
+            
+            await sheets.spreadsheets.values.update({
+                spreadsheetId: SPREADSHEET_ID,
+                range: `${SHEET_NAME}!A${nextRow}:E${nextRow}`,
+                valueInputOption: 'USER_ENTERED',
+                requestBody: {
+                    values: [row]
+                },
+            });
+        }
 
         console.log('Successfully added row to sheet');
         return NextResponse.json({ success: true }, { headers: corsHeaders });
