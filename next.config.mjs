@@ -2,7 +2,8 @@
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  output: 'export',
+  // Note: output: 'export' was removed to enable API routes for the contact form
+  // If you need static export in the future, consider using a third-party form service
   images: {
     unoptimized: true,
     remotePatterns: [
