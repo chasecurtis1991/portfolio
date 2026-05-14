@@ -32,10 +32,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${manrope.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
-      >
+    <html
+      lang="en"
+      className={`${manrope.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
+    >
+      <body>
         {children}
         <Analytics />
       </body>
