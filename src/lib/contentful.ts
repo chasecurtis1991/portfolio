@@ -1,27 +1,5 @@
-import { createClient } from "contentful";
+import { createClient, type ContentfulClientApi } from "contentful";
 import { Document, BLOCKS } from "@contentful/rich-text-types";
-import type {
-  ContentTypeCollection,
-} from "contentful";
-
-// Validate environment variables
-function validateEnvVariables() {
-  const spaceId = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
-  const accessToken = process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN;
-
-  if (!spaceId) {
-    throw new ContentfulError(
-      "Missing NEXT_PUBLIC_CONTENTFUL_SPACE_ID environment variable"
-    );
-  }
-  if (!accessToken) {
-    throw new ContentfulError(
-      "Missing NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN environment variable"
-    );
-  }
-
-  return { spaceId, accessToken };
-}
 
 const defaultDocument: Document = {
   nodeType: BLOCKS.DOCUMENT,
@@ -113,16 +91,35 @@ class ContentfulError extends Error {
   }
 }
 
-// Initialize Contentful client with validated environment variables
-const { spaceId, accessToken } = validateEnvVariables();
+// Lazy client: missing env vars don't crash module load (important for CI
+// builds without Contentful secrets). Consumers get null and fail gracefully.
+function buildContentfulClient(): ContentfulClientApi<undefined> | null {
+  const spaceId = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
+  const accessToken = process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN;
 
-export const contentfulClient = createClient({
-  space: spaceId,
-  accessToken: accessToken,
-  environment: "master",
-});
+  if (!spaceId || !accessToken) {
+    if (typeof window === 'undefined') {
+      console.warn(
+        'Contentful client not initialized: NEXT_PUBLIC_CONTENTFUL_SPACE_ID or NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN is missing.'
+      );
+    }
+    return null;
+  }
+
+  return createClient({
+    space: spaceId,
+    accessToken,
+    environment: 'master',
+  });
+}
+
+export const contentfulClient = buildContentfulClient();
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
+  if (!contentfulClient) {
+    return [];
+  }
+
   try {
     const response = await contentfulClient.getEntries<BlogPostSkeleton>({
       content_type: 'blogPost',
@@ -173,6 +170,10 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
   if (!slug) {
     throw new ContentfulError("Blog post slug is required");
+  }
+
+  if (!contentfulClient) {
+    return null;
   }
 
   try {
