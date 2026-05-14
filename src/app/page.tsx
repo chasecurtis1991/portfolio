@@ -1,68 +1,38 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Header } from "@/sections/Header";
-import { HeroSection as Hero } from "@/sections/Hero";
-import { AboutSection as About } from "@/sections/About";
-import { ProjectsSection as Projects } from "@/sections/Projects";
-import { ContactSection as Contact } from "@/sections/Contact";
-import { Blog } from "@/sections/Blog";
-import { Footer } from "@/sections/Footer";
-import { TestimonialsSection } from "@/sections/Testimonials";
+import { HeroSection } from "@/sections/Hero";
+import { ProjectsSection } from "@/sections/Projects";
+import { AboutSection } from "@/sections/About";
 import { TapeSection } from "@/sections/Tape";
+import { TestimonialsSection } from "@/sections/Testimonials";
+import { ContactSection } from "@/sections/Contact";
+import { GradientMesh } from "@/components/effects/GradientMesh";
+import { Grain } from "@/components/effects/Grain";
+import { ScrollProgress } from "@/components/effects/ScrollProgress";
+import { MagneticCursor } from "@/components/effects/MagneticCursor";
+import { useReveal } from "@/hooks/useReveal";
 
 export default function Home() {
-  const [isBlogVisible, setIsBlogVisible] = useState(false);
+  const rootRef = useReveal<HTMLDivElement>();
 
   return (
-    <div className="relative min-h-screen bg-gray-900">
-      <Header onBlogVisibilityChange={setIsBlogVisible} />
-      
-      <motion.main
-        className="relative"
-        animate={{
-          x: isBlogVisible ? "-100%" : 0,
-          opacity: isBlogVisible ? 0 : 1
-        }}
-        transition={{
-          type: "tween",
-          duration: 0.5,
-          ease: "easeInOut"
-        }}
-      >
-        <Hero />
-        <Projects />
+    <div ref={rootRef}>
+      <GradientMesh />
+      <Grain />
+      <ScrollProgress />
+      <MagneticCursor enabled />
+      <Header />
+      <main>
+        <HeroSection />
+        <ProjectsSection />
+        <AboutSection />
         <TapeSection />
         <TestimonialsSection />
-        <About />
-        <Contact />
-      </motion.main>
-
-      <AnimatePresence>
-        {isBlogVisible && (
-          <motion.div
-            className="fixed top-0 right-0 w-full h-screen overflow-y-auto bg-gray-900"
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{
-              type: "tween",
-              duration: 0.5,
-              ease: "easeInOut"
-            }}
-          >
-            <div className="min-h-screen flex flex-col">
-              <div className="pt-20 flex-grow">
-                <Blog />
-              </div>
-              <Footer />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {!isBlogVisible && <Footer />}
+        <ContactSection />
+      </main>
+      <div className="corner-label">CHASE · CURTIS / KNX · 2026</div>
+      <div className="corner-label-right">SCROLL ↓</div>
     </div>
   );
 }
