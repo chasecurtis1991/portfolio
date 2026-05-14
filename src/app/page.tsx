@@ -1,5 +1,3 @@
-"use client";
-
 import { Header } from "@/sections/Header";
 import { HeroSection } from "@/sections/Hero";
 import { ProjectsSection } from "@/sections/Projects";
@@ -11,13 +9,11 @@ import { GradientMesh } from "@/components/effects/GradientMesh";
 import { Grain } from "@/components/effects/Grain";
 import { ScrollProgress } from "@/components/effects/ScrollProgress";
 import { MagneticCursor } from "@/components/effects/MagneticCursor";
-import { useReveal } from "@/hooks/useReveal";
+import { RevealRoot } from "@/components/RevealRoot";
 
-export default function Home() {
-  const rootRef = useReveal<HTMLDivElement>();
-
+export default async function Home() {
   return (
-    <div ref={rootRef}>
+    <RevealRoot>
       <GradientMesh />
       <Grain />
       <ScrollProgress />
@@ -33,6 +29,6 @@ export default function Home() {
       </main>
       <div className="corner-label">CHASE · CURTIS / KNX · 2026</div>
       <div className="corner-label-right">SCROLL ↓</div>
-    </div>
+    </RevealRoot>
   );
 }

@@ -25,7 +25,7 @@ const nextConfig = {
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data:",
+      "img-src 'self' data: https://i.gr-assets.com https://images.gr-assets.com",
       "connect-src 'self' https://vitals.vercel-insights.com",
       "object-src 'none'",
       "frame-ancestors 'none'",
