@@ -297,6 +297,22 @@ body.no-magnetic .btn { cursor: pointer; }
   transition: transform .25s var(--ease-out);
   transform-style: preserve-3d;
 }
+
+/* Variant when a real README screenshot is present: container hugs the image's
+   natural aspect ratio so the whole shot is visible without cropping. */
+.proj-shot.proj-shot-img {
+  aspect-ratio: auto;
+  background: transparent;
+}
+.proj-shot.proj-shot-img .tilt-layer {
+  position: static;
+  display: block;
+}
+.proj-shot.proj-shot-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 .proj-shot .badge {
   position: absolute; top: 18px; left: 18px;
   font-family: var(--font-mono); font-size: 11px; color: var(--fg-0); padding: 6px 10px;

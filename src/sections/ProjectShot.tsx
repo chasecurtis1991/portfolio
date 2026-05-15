@@ -109,22 +109,17 @@ function MockUI({ label }: { label: string }) {
 
 export function ProjectShot({ n, total, shotUrl, shotBg, shotLabel, title }: ProjectShotProps) {
   const tilt = useTilt(10);
+  const className = "proj-shot fade-in" + (shotUrl ? " proj-shot-img" : "");
   return (
-    <div className="proj-shot fade-in" {...tilt} style={{ background: shotBg }}>
+    <div
+      className={className}
+      {...tilt}
+      style={shotUrl ? undefined : { background: shotBg }}
+    >
       <div className="tilt-layer">
         {shotUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={shotUrl}
-            alt={`Screenshot of ${title}`}
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
+          <img src={shotUrl} alt={`Screenshot of ${title}`} />
         ) : (
           <MockUI label={shotLabel} />
         )}
