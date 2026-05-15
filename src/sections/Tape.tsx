@@ -1,41 +1,75 @@
-import StarIcon from "@/assets/icons/star.svg"
-import {Fragment} from "react";
+import type { ComponentType, SVGProps } from "react";
+import {
+  SiTypescript,
+  SiReact,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiTailwindcss,
+  SiFramer,
+  SiGreensock,
+  SiShopify,
+  SiFigma,
+  SiVercel,
+  SiPostgresql,
+  SiThreedotjs,
+} from "react-icons/si";
 
-const words = [
-    "Performant",
-    "Accessible",
-    "Secure",
-    "Interactive",
-    "Scalable",
-    "User Friendly",
-    "Responsive",
-    "Maintainable",
-    "Search Optimized",
-    "Usable",
-    "Reliable",
+interface Tool {
+  name: string;
+  Icon: ComponentType<SVGProps<SVGSVGElement>>;
+}
+
+const TOOLS: Tool[] = [
+  { name: "TypeScript", Icon: SiTypescript },
+  { name: "React", Icon: SiReact },
+  { name: "Next.js", Icon: SiNextdotjs },
+  { name: "Node", Icon: SiNodedotjs },
+  { name: "Tailwind", Icon: SiTailwindcss },
+  { name: "Framer Motion", Icon: SiFramer },
+  { name: "GSAP", Icon: SiGreensock },
+  { name: "Shopify", Icon: SiShopify },
+  { name: "Figma", Icon: SiFigma },
+  { name: "Vercel", Icon: SiVercel },
+  { name: "PostgreSQL", Icon: SiPostgresql },
+  { name: "Three.js", Icon: SiThreedotjs },
 ];
 
-export const TapeSection = () => {
-    return (
-        <div className={"py-16 lg:py-24 overflow-x-clip"}>
-            <div className={"bg-gradient-to-r from-emerald-300 to-sky-400 -rotate-3 -mx-1"}>
-                <div
-                    className={"flex [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"}>
-                    <div className={"flex flex-none gap-4 pr-4 py-3 animate-move-left [animation-duration:30s]"}>
-                        {[...new Array(2)].fill(0).map((_, idx) => (
-                            <Fragment key={idx}>
-                                {words.map(word => (
-                                    <div key={word} className={"inline-flex gap-4 items-center"}>
-                                        <span className={"text-gray-900 uppercase font-extrabold text-sm"}>{word}</span>
-                                        <StarIcon className={"size-6 text-gray-900 -rotate-12"}/>
-                                    </div>
-                                ))}
-                            </Fragment>
-                        ))}
+function ToolRow({ items, keyPrefix }: { items: Tool[]; keyPrefix: string }) {
+  return items.map((t, i) => (
+    <div className="tool" key={`${keyPrefix}-${i}`}>
+      <span className="tool-icon">
+        <t.Icon aria-hidden="true" />
+      </span>
+      {t.name}
+    </div>
+  ));
+}
 
-                    </div>
-                </div>
-            </div>
+export function TapeSection() {
+  const reversed = TOOLS.slice().reverse();
+  return (
+    <section id="stack" className="section" style={{ paddingBottom: 80 }}>
+      <div className="wrap">
+        <div className="sec-head">
+          <div>
+            <div className="label">Toolbox</div>
+            <h2 className="reveal">
+              <span className="line">The kit I reach for.</span>
+            </h2>
+          </div>
+          <div className="count">Daily drivers · battle-tested</div>
         </div>
-    );
-};
+      </div>
+      <div className="tool-marquee">
+        <div className="tool-track">
+          <ToolRow items={[...TOOLS, ...TOOLS]} keyPrefix="a" />
+        </div>
+      </div>
+      <div className="tool-marquee" style={{ borderTop: "none", marginTop: -1 }}>
+        <div className="tool-track" style={{ animationDirection: "reverse" }}>
+          <ToolRow items={[...reversed, ...reversed]} keyPrefix="b" />
+        </div>
+      </div>
+    </section>
+  );
+}

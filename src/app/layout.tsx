@@ -1,25 +1,45 @@
 import type { Metadata } from "next";
-import { Inter, Calistoga } from 'next/font/google'
+import { Manrope, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
-import {twMerge} from "tailwind-merge";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans"})
-const calistoga = Calistoga({ subsets: ["latin"], variable: "--font-serif", weight: ["400"]})
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-instrument-serif",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "My Portfolio",
-  description: "Created by Chase Curtis",
+  title: "Chase Curtis — Frontend Engineer",
+  description:
+    "Frontend engineer building interfaces that feel as good as they look. React, TypeScript, and a healthy obsession with the details.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={twMerge(inter.variable, calistoga.variable, "bg-gray-900 text-white antialiased font-sans")}>{children}<Analytics /></body>
+    <html
+      lang="en"
+      className={`${manrope.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
+    >
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
