@@ -20,7 +20,7 @@ function formatReadAtUTC(iso: string | null): string | null {
 }
 
 const USER_ID = process.env.NEXT_PUBLIC_GOODREADS_USER_ID ?? "154039453";
-const SHELF = process.env.NEXT_PUBLIC_GOODREADS_SHELF ?? "read";
+const SHELF = process.env.NEXT_PUBLIC_GOODREADS_SHELF ?? "chase-books";
 
 function extractField(item: string, tag: string): string | null {
   // Matches <tag>...</tag> or <tag><![CDATA[...]]></tag>

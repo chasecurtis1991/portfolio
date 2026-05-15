@@ -37,7 +37,7 @@ export function ReadsCard({ book }: { book: GoodreadsBook | null }) {
     <div className="fade-in" ref={parallaxRef}>
       <div className="reads-card">
         <div className="reads-head">
-          <h4>{book ? "Recently finished" : "Currently reading"}</h4>
+          <h4>{book?.readAt ? "Recently finished" : "Currently reading"}</h4>
           <span className={`tag${book ? " live" : ""}`}>
             {book ? book.shelf.replace(/-/g, " ").toUpperCase() : "My shelf"}
           </span>
