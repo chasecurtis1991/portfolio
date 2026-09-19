@@ -18,16 +18,26 @@ const nextConfig = {
     NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
   },
   async headers() {
+    const isProd = process.env.NODE_ENV === 'production';
+    // upgrade-insecure-requests only makes sense in production where HTTPS is
+    // available. In dev it breaks asset loading when the server runs on http.
+    const csp = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: https://i.gr-assets.com https://images.gr-assets.com https://raw.githubusercontent.com https://user-images.githubusercontent.com https://github.com",
+      "connect-src 'self' https://vitals.vercel-insights.com",
+      "object-src 'none'",
+      "frame-ancestors 'none'",
+      ...(isProd ? ['upgrade-insecure-requests'] : []),
+    ].join('; ') + ';';
+
     return [
       {
         // Apply these headers to all routes in your application.
         source: '/:path*',
         headers: [
-          {
-            key: 'Content-Security-Policy',
-            value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests;",
-          },
+          { key: 'Content-Security-Policy', value: csp },
           {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload',

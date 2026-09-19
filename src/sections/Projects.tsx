@@ -1,130 +1,115 @@
-import doeCodeLandingPage from "@/assets/images/doecode-landing-page.png";
-import valenceLandingPage from "@/assets/images/valence-landing-page.png";
-import katkamLandingPage from "@/assets/images/katkam-landing-page.png";
-import kanbanProject from "@/assets/images/Kanban.png";
-import cyberusProject from "@/assets/images/cyberus.png";
-import Image from "next/image";
-import CheckCircleIcon from "@/assets/icons/check-circle.svg";
-import ArrowUpRightIcon from "@/assets/icons/arrow-up-right.svg";
-import {SectionHeader} from "@/components/SectionHeader";
-import Card from "@/components/Card";
+import { getProjects, type Project } from "@/lib/github";
+import { ProjectShot } from "./ProjectShot";
 
-const portfolioProjects = [
-    {
-        company: "Chase Curtis",
-        year: "2024",
-        title: "Spotify Now Playing Widget",
-        results: [
-            {title: "Real-time song progress tracking"},
-            {title: "Direct links to currently playing track"},
-            {title: "Auto-updates when songs change"},
-        ],
-        link: "https://github.com/chasecurtis1991/cyberus",
-        image: cyberusProject,
-        buttonText: "View Project"
-    },
-    {
-        company: "Chase Curtis",
-        year: "2024",
-        title: "Kanban Task Manager",
-        results: [
-            {title: "Organizes tasks into customizable columns"},
-            {title: "Intuitive drag-and-drop functionality"},
-            {title: "Clean and minimal design"},
-        ],
-        link: "https://github.com/chasecurtis1991/todo-kanban",
-        image: kanbanProject,
-        buttonText: "View Project"
-    },
-    {
-        company: "KatKam",
-        year: "2022",
-        title: "KatKam Landing Page",
-        results: [
-            {title: "Created Shopify e-commerce store"},
-            {title: "Improved merchandise sales by 80%"},
-            {title: "Increased social media traffic by 15%"},
-        ],
-        link: "https://github.com/chasecurtis1991/KatKam-Shopify",
-        image: katkamLandingPage,
-        buttonText: "View Project"
-    },
-    {
-        company: "DOE Code",
-        year: "2019",
-        title: "DOE Code Search Page",
-        results: [
-            {title: "Enhanced user experience by 30%"},
-            {title: "Improved site speed by 20%"},
-            {title: "Increased mobile traffic by 35%"},
-        ],
-        link: "https://www.osti.gov/doecode",
-        image: doeCodeLandingPage,
-        buttonText: "Visit Live Site"
-    },
-    {
-        company: "Valence",
-        year: "2018",
-        title: "Valence Landing Page",
-        results: [
-            {title: "Boosted sales by 20%"},
-            {title: "Expanded customer reach by 35%"},
-            {title: "Increased brand awareness by 15%"},
-        ],
-        link: "https://github.com/chasecurtis1991/valence",
-        image: valenceLandingPage,
-        buttonText: "View Project"
-    },
-];
+function ProjectCard({ p, index, total }: { p: Project; index: number; total: string }) {
+  const flip = index % 2 === 1;
+  const isGitHub = p.link.includes("github");
+  return (
+    <article className={"proj " + (flip ? "flip" : "")}>
+      <div className="proj-body">
+        <div className="proj-meta">
+          <span className="num">{p.n}</span>
+          <span className="dot" />
+          <span>{p.client}</span>
+          <span className="dot" />
+          <span>{p.year}</span>
+        </div>
+        <h3 className="reveal">
+          <span className="line">{p.title}</span>
+        </h3>
+        {p.desc && (
+          <p
+            className="fade-in"
+            style={{
+              color: "var(--fg-1)",
+              fontSize: "17px",
+              lineHeight: 1.55,
+              margin: "0 0 28px",
+              maxWidth: 520,
+            }}
+          >
+            {p.desc}
+          </p>
+        )}
+        {p.bullets.length > 0 && (
+          <ol className="proj-bullets fade-in">
+            {p.bullets.map((b, j) => (
+              <li key={j}>{b}</li>
+            ))}
+          </ol>
+        )}
+        {p.stack.length > 0 && (
+          <div
+            className="fade-in"
+            style={{ display: "flex", flexWrap: "wrap", gap: 8, margin: "0 0 28px" }}
+          >
+            {p.stack.map((s) => (
+              <span
+                key={s}
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 11,
+                  color: "var(--fg-2)",
+                  padding: "6px 10px",
+                  border: "1px solid var(--line)",
+                  borderRadius: 999,
+                }}
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+        )}
+        <a
+          className="proj-link fade-in"
+          href={p.link}
+          data-magnetic
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {isGitHub ? "View on GitHub" : "Visit live site"} <span>→</span>
+        </a>
+      </div>
+      <ProjectShot
+        n={p.n}
+        total={total}
+        shotUrl={p.shotUrl}
+        shotBg={p.shotBg}
+        shotLabel={p.shotLabel}
+        title={p.title}
+      />
+    </article>
+  );
+}
 
-export const ProjectsSection = () => {
-    return (
-        <section id={"projects"} className={"pb-16 lg:py-24"}>
-            <div className={"container"}>
-                <SectionHeader title={"Featured Projects"} eyebrow={"Real-world Results"}
-                               description={"See how I transformed concepts into engaging digital experiences."}/>
-                <div className={"flex flex-col mt-10 md:mt-20 gap-20"}>
-                    {portfolioProjects.map((project, projectIndex) => (
-                        <Card key={project.title}
-                             className={"px-8 pt-8 pb-0 md:pt-12 md:px-10 lg:pt-16 lg:px-20 sticky"} style={{
-                                 top: `calc(64px + ${projectIndex * 40}px)`,
-                        }}>
-                            <div className={"lg:grid lg:grid-cols-2 lg:gap-16"}>
-                                <div className={"lg:pb-16"}>
-                                    <div
-                                        className={"bg-gradient-to-r from-emerald-300 to-sky-400 inline-flex gap-2 font-bold uppercase tracking-widest text-sm text-transparent bg-clip-text"}>
-                                        <span>{project.company}</span>
-                                        <span>&bull;</span>
-                                        <span>{project.year}</span>
-                                    </div>
-                                    <h3 className={"font-serif text-2xl mt-2 md:mt-5 md:text-4xl"}>{project.title}</h3>
-                                    <hr className={"border-t-2 border-white/5 mt-4 md:mt-5"}/>
-                                    <ul className={"flex flex-col gap-4 mt-4 md:mt-5"}>
-                                        {project.results.map((result) => (
-                                            <li key={result.title}
-                                                className={"flex gap-2 text-sm md:text-base text-white/50"}>
-                                                <CheckCircleIcon className={"size-5 md:size-6"}/>
-                                                <span>{result.title}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                    <a href={project.link} target={"_blank"}>
-                                        <button
-                                            className={"bg-white text-gray-950 h-12 w-full md:w-auto px-6 rounded-xl font-semibold inline-flex items-center justify-center gap-2 mt-8 hover:scale-110 transition duration-300"}>
-                                            <span>{project.buttonText}</span>
-                                            <ArrowUpRightIcon className={"size-5 mb-1"}/>
-                                        </button>
-                                    </a>
-                                </div>
-                                <div className={"relative"}>
-                                    <Image src={project.image} alt={project.title}
-                                           className={"mt-8 -mb-4 md:-mb-0 lg:mt-0 lg:absolute lg:h-full lg:w-auto lg:max-w-none"}/>
-                                </div>
-                            </div>
-                        </Card>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-};
+export async function ProjectsSection() {
+  const projects = await getProjects();
+  const total = projects.length.toString().padStart(2, "0");
+  const firstYear =
+    projects[projects.length - 1]?.year ?? new Date().getFullYear().toString();
+  const lastYear =
+    projects[0]?.year ?? new Date().getFullYear().toString();
+
+  return (
+    <section id="work" className="section">
+      <div className="wrap">
+        <div className="sec-head">
+          <div>
+            <div className="label">Selected Work</div>
+            <h2 className="reveal">
+              <span className="line">Things I&apos;ve shipped.</span>
+            </h2>
+          </div>
+          <div className="count">
+            {total} projects · {firstYear} — {lastYear}
+          </div>
+        </div>
+        <div className="projects-grid">
+          {projects.map((p, i) => (
+            <ProjectCard key={p.title} p={p} index={i} total={total} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
