@@ -24,7 +24,7 @@ A modern, responsive single-page portfolio website built with Next.js 13+, React
 
 Before you begin, ensure you have:
 
-1. Node.js installed (Latest LTS version recommended)
+1. Node.js 24.x installed (`nvm use` reads the repository’s `.nvmrc`)
 2. A Google Cloud Platform account for Sheets API
 3. Required environment variables:
    - GOOGLE_CLIENT_EMAIL
