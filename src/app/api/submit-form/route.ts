@@ -21,10 +21,15 @@ const formatPrivateKey = (key: string | undefined) => {
     return formattedKey;
 };
 
-const ALLOWED_ORIGIN = process.env.NEXT_PUBLIC_SITE_URL || 'https://chasecurtis.dev';
+const ALLOWED_ORIGINS = new Set([
+    'https://chasecurtis.com',
+    'https://www.chasecurtis.com',
+    ...(process.env.NEXT_PUBLIC_SITE_URL ? [process.env.NEXT_PUBLIC_SITE_URL] : []),
+]);
 
 const corsHeaders = (origin: string | null) => ({
-    'Access-Control-Allow-Origin': origin === ALLOWED_ORIGIN ? ALLOWED_ORIGIN : '',
+    ...(origin && ALLOWED_ORIGINS.has(origin) ? { 'Access-Control-Allow-Origin': origin } : {}),
+    'Vary': 'Origin',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
 });
